@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "JsonTest";
+}
+
+<h1>讀取json</h1>
+<ul></ul>
+
+<h3></h3>
+
+<ul id="employee-list"></ul>
+@section Scripts{
+    <script>
+        var emps = [{ "name": "Tom", "workYears": 3, "salary": 35000 },
+        { "name": "Jack", "workYears": 5, "salary": 40000 },
+        { "name": "Mary", "workYears": 7, "salary": 45000 }];
+        // console.log(emps);
+
+        emps.forEach(emp => {
+            console.log(emp.name)
+            console.log(emp.salary)
+            console.log(emp.workYears)
+        })
+
+        var employeeList = document.getElementById("employee-list");
+
+   
+        emps.forEach(emp => {
+            var listItem = document.createElement("li");
+            listItem.textContent = "姓名: " + emp.name + ", 工作年資: " + emp.workYears + ", 薪水: " + emp.salary;
+            employeeList.appendChild(listItem);
+        });
+
+        
+
+    </script>
+}
