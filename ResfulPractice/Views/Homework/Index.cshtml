@@ -42,8 +42,8 @@
                 const datas = spots.CommonFormat.Section.map(spot => {
                 const des = spot.stitle;
                 const img = spot.file.img[0]?.text;
-                const content = spot.xbody;
-                    const date = spot.xpostDate;
+                const content = spot.xbody.substring(0, 100) + "...";
+                const date = spot.xpostDate;
               
 
                 return (
