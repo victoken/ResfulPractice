@@ -49,5 +49,14 @@ namespace ResfulPractice.Controllers
             return Content($"Hello {name}, {age}歲了", "text/plain", Encoding.UTF8);
         }
 
+        //0130作業
+        public IActionResult CheckAccount(string Name)
+        {
+            if (_context.Members.Any(x => x.Name == Name))
+                return Content($"名稱 {Name} 已被註冊");
+            else
+                return Content($"名稱 {Name} 可以使用");
+        }
+
     }
 }

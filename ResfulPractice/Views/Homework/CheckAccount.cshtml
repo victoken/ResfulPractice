@@ -1,9 +1,9 @@
-﻿@* ﻿@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "CheckAccount";
 }
 
-<h1>Index</h1>
-<div class="row">
+<h1>CheckAccount</h1>
+<div id="validationMessage" class="row">
     <div class="col-3"></div>
     <div class="col-6">
         <form id="userForm">
@@ -36,7 +36,7 @@
     <script>
         let inputname = document.getElementById("userName")
 
-        $(document).ready(() => {
+        $(function () {
             inputname.addEventListener('blur', async () => {
                 let url = "@Url.Content("~/api/CheckAccount")?Name=" + inputname.value
                 let data = await fetch(url)
@@ -47,4 +47,5 @@
         })
 
     </script>
-} *@
+}
+
