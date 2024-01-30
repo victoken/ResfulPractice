@@ -15,6 +15,7 @@ namespace ResfulPractice.Controllers
         }
         public IActionResult Index()
         {
+            Thread.Sleep(3000);
             return Content("Hello Fetch!!", "text/plain", Encoding.UTF8);
         }
 
