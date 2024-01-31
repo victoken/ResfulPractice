@@ -19,12 +19,28 @@ namespace ResfulPractice.Controllers
             return Content("Hello Fetch!!", "text/plain", Encoding.UTF8);
         }
 
+        //讀城市
         public IActionResult Cities()
         {
            
             var cities= _context.Addresses.Select(x => x.City).Distinct();  
             return Json(cities);
         }
+
+        //根據城市名稱讀取鄉鎮區
+        public IActionResult District(string city)
+        {
+
+            var districts = _context.Addresses.Where(a => a.City == city).Select(a => a.SiteId).Distinct();
+            return Json(districts);
+        }
+
+        //根據鄉鎮區名稱讀取路名
+        //public IActionResult Details()
+        //{
+
+        //}
+
         public IActionResult Avatar(int id = 1)
         {
             //不用_context.Member.Where(m=>m.MemberId=id) 因為Find會自動根據主所以見搜尋
