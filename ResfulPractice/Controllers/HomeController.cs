@@ -48,8 +48,14 @@ namespace ResfulPractice.Controllers
         {
             return View();
         }
-
+        //0131下拉式選單
         public IActionResult Address()
+        {
+            return View();
+        }
+
+        //讀取二進制圖片
+        public IActionResult Avatar()
         {
             return View();
         }
