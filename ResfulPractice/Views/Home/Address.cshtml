@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Address";
+}
+
+<h1>Address</h1>
+<select id="select1">
+    <option value="1">項目一</option>
+    <option value="1">項目二</option>
+    <option value="1">項目三</option>
+</select>
+
+@section Scripts{
+    <script>
+        const selCity = document.querySelector('#select1');
+        (async () => {
+            const url = '@Url.Content("~/api/cities")';
+            const response = await fetch(url);
+            const datas = await response.json();
+            //資料讀取 還有以下方法 foreach for
+            const optCities = datas.map(city => {
+                return(`<option>${city}</option>`)
+                //箭頭函數在只有一行的情況下可以不寫return
+                //const optCities = datas.map(city => `<option>${city}</option>`);
+                  
+            });
+
+            //資料顯示
+            selCity.innerHTML=optCities.join("");
+            //因為是陣列 所以要用join
+        })();
+    </script>
+}
