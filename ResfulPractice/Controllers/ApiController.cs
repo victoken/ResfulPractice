@@ -10,9 +10,11 @@ namespace ResfulPractice.Controllers
     {
         private readonly MyDBContext _context;
 
-        public ApiController(MyDBContext context)
+        private readonly IWebHostEnvironment _environment;
+        public ApiController(MyDBContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
         public IActionResult Index()
         {
@@ -81,8 +83,23 @@ namespace ResfulPractice.Controllers
             {
                 _user.Name = "guest";
             }
+
+            //string uploadPath = @"C:\Shared\AjaxWorkspace\MSIT155Site\wwwroot\uploads\a.jpg";
+            string fileName = "empty.jpg";
+            if (_user.Avatar != null)
+            {
+                fileName = _user.Avatar.FileName;
+            }
+            string uploadPath = Path.Combine(_environment.WebRootPath, "uploads", fileName);
+
+            using (var fileStream = new FileStream(uploadPath, FileMode.Create))
+            {
+                _user.Avatar?.CopyTo(fileStream);
+            }
+
             // return Content($"Hello {_user.Name}, {_user.Age}歲了, 電子郵件是 {_user.Email}","text/plain", Encoding.UTF8);
-            return Content($"{_user.Avatar?.FileName} - {_user.Avatar?.ContentType} - {_user.Avatar?.Length}");
+            //return Content($"{_user.Avatar?.FileName} - {_user.Avatar?.ContentType} - {_user.Avatar?.Length}");
+            return Content(uploadPath);
         }
 
 
