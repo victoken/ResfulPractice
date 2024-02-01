@@ -57,14 +57,14 @@ namespace ResfulPractice.Controllers
             return NotFound();
         }
 
-        public IActionResult Register(string name, int age = 28)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                name = "guest";
-            }
-            return Content($"Hello {name}, {age}歲了", "text/plain", Encoding.UTF8);
-        }
+        //public IActionResult Register(string name, int age = 28)
+        //{
+        //    if (string.IsNullOrEmpty(name))
+        //    {
+        //        name = "guest";
+        //    }
+        //    return Content($"Hello {name}, {age}歲了", "text/plain", Encoding.UTF8);
+        //}
 
         //0130作業
         public IActionResult CheckAccount(string Name)

@@ -1,4 +1,4 @@
-﻿namespace MSIT155Site.Models.DTO
+﻿namespace ResfulPractice.Models.DTO
 {
     public class UserDTO
     {

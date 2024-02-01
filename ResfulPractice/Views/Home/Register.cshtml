@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-3"></div>
     <div class="col-6">
-        <form id="userForm">
+        <form id="userForm" enctype="">
             <div class="mb-3">
                 <label for="userName" class="form-label">姓名：</label>
                 <input type="text" class="form-control" id="userName" name="Name">
@@ -29,16 +29,54 @@
     </div>
 </div>
 
-@section Scripts {
+@section Scripts{
     <script>
-        (async () => {
-            const url = '@Url.Content("~/api/register")?name=Tom&age=30&email=Tom@company.com';
-            const response = await fetch(url);
+        const btnSubmit = document.querySelector('#button1');
+        // const txtName = document.querySelector('#userName');
+        // const txtEmail = document.querySelector('#UserEmail');
+        // const txtAge = document.querySelector('#userAge');
+        const divInfo = document.querySelector('#div1');
+
+        btnSubmit.addEventListener('click', async (event) => {
+            event.preventDefault(); //停止預設行為
+            // console.log(txtName.value);
+            // console.log(txtEmail.value);
+            // console.log(txtAge.value);
+
+            //FormData
+            const formData = new FormData(document.querySelector('#userForm'));
+            // formData.append("key", "123");
+            //讀取FormData中的資料
+            // for (const pair of formData.entries()) {
+            //     console.log(pair[0]);
+            //     console.log(pair[1]);
+            // }
+            const url = '@Url.Content("~/api/register")';
+            const response = await fetch(url, {
+                "method":"POST",
+                "body":formData
+            });
             const data = await response.text();
-            console.log(data);
+            divInfo.innerHTML = data;
+          
 
-        })();
+            // const url = `@Url.Content("~/api/register")?name=${txtName.value}&age=${txtAge.value}&email=${txtEmail.value}`;
+            //     const response = await fetch(url);
+            //     const data = await response.text();
+            // divInfo.innerHTML = data;
+          
+        })
 
+
+
+        // (async() => {
+        //  const url = '@Url.Content("~/api/register")?name=Tom&age=30&email=Tom@company.com';
+        //     const response = await fetch(url);
+        //     const data = await response.text();
+        //     console.log(data);
+        
+        // })();
+       
     </script>
 }
 
