@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ResfulPractice.Models;
+using ResfulPractice.Models.DTO;
 using System.Text;
 
 namespace ResfulPractice.Controllers
@@ -73,6 +74,16 @@ namespace ResfulPractice.Controllers
             else
                 return Content($"名稱 {Name} 可以使用");
         }
+
+        public IActionResult Register(UserDTO _user)
+        {
+            if (string.IsNullOrEmpty(_user.Name))
+            {
+                _user.Name = "guest";
+            }
+            return Content($"Hello {_user.Name}, {_user.Age}歲了, 電子郵件是 {_user.Email}", "text/plain", Encoding.UTF8);
+        }
+
 
     }
 }
