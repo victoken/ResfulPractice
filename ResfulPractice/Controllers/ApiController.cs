@@ -76,32 +76,85 @@ namespace ResfulPractice.Controllers
             else
                 return Content($"名稱 {Name} 可以使用");
         }
+        //[HttpPost]
+        //public IActionResult Register(UserDTO _user)
+        //{
+        //    if (string.IsNullOrEmpty(_user.Name))
+        //    {
+        //        _user.Name = "guest";
+        //    }
 
-        public IActionResult Register(UserDTO _user)
+        //    //string uploadPath = @"C:\Shared\AjaxWorkspace\MSIT155Site\wwwroot\uploads\a.jpg";
+        //    string fileName = "empty.jpg";
+        //    if (_user.Avatar != null)
+        //    {
+        //        fileName = _user.Avatar.FileName;
+        //    }
+        //    string uploadPath = Path.Combine(_environment.WebRootPath, "uploads", fileName);
+
+        //    using (var fileStream = new FileStream(uploadPath, FileMode.Create))
+        //    {
+        //        _user.Avatar?.CopyTo(fileStream);
+        //    }
+
+        //    // return Content($"Hello {_user.Name}, {_user.Age}歲了, 電子郵件是 {_user.Email}","text/plain", Encoding.UTF8);
+        //    //return Content($"{_user.Avatar?.FileName} - {_user.Avatar?.ContentType} - {_user.Avatar?.Length}");
+        //    return Content(uploadPath);
+        //}
+
+        [HttpPost]
+        public IActionResult Register(Member _user, IFormFile Avatar)
         {
             if (string.IsNullOrEmpty(_user.Name))
             {
                 _user.Name = "guest";
             }
+            //todo
+            //1. 只允許上傳圖檔
+            //2. 圖檔最大2M
+            //3. 檔案名稱重複處理
 
             //string uploadPath = @"C:\Shared\AjaxWorkspace\MSIT155Site\wwwroot\uploads\a.jpg";
             string fileName = "empty.jpg";
-            if (_user.Avatar != null)
+            if (Avatar != null)
             {
-                fileName = _user.Avatar.FileName;
+                fileName = Avatar.FileName;
             }
             string uploadPath = Path.Combine(_environment.WebRootPath, "uploads", fileName);
 
             using (var fileStream = new FileStream(uploadPath, FileMode.Create))
             {
-                _user.Avatar?.CopyTo(fileStream);
+                Avatar?.CopyTo(fileStream);
             }
 
             // return Content($"Hello {_user.Name}, {_user.Age}歲了, 電子郵件是 {_user.Email}","text/plain", Encoding.UTF8);
             //return Content($"{_user.Avatar?.FileName} - {_user.Avatar?.ContentType} - {_user.Avatar?.Length}");
+
+            //新增到資料庫
+            _user.FileName = fileName;
+            //轉成二進位
+            byte[]? imgByte = null;
+            using (var memoryStream = new MemoryStream())
+            {
+                Avatar?.CopyTo(memoryStream);
+                imgByte = memoryStream.ToArray();
+            }
+            _user.FileData = imgByte;
+
+
+            _context.Members.Add(_user);
+            _context.SaveChanges();
+
+
             return Content(uploadPath);
         }
 
+        //景點資料
+        [HttpPost]
+        public IActionResult Spots([FromBody] SearchDTO _search)
+        {
+            return Json(_search);
+        }
 
     }
 }

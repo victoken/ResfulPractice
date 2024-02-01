@@ -59,5 +59,10 @@ namespace ResfulPractice.Controllers
         {
             return View();
         }
+
+        public IActionResult Spots()
+        {
+            return View();
+        }
     }
 }
